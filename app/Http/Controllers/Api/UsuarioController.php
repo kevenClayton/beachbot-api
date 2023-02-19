@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -19,8 +20,8 @@ class UsuarioController extends Controller
             $usuarios[0] = 'Keven';
             $usuarios[1] = 'Cairo';
             $usuarios[2] = 'Fulano';
-    
-            return response()->json([            
+
+            return response()->json([
                 'usuarios' => $usuarios ,
                 'mensagem' => 'Teste sucesso',
                 'error' => false,
@@ -31,7 +32,7 @@ class UsuarioController extends Controller
                 'message' => $e->getMessage(),
             ], 404);
         }
-        
+
     }
 
     /**
@@ -39,9 +40,9 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function mostrar()
     {
-        //
+       return Auth::user();
     }
 
     /**
