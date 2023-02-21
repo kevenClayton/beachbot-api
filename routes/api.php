@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\UsuarioController;
 |
 */
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'treblle'])->group(function () {
 
     Route::controller(UsuarioController::class)->prefix('usuario')->group(function () {
         Route::get('/listar', 'listar');
@@ -25,10 +25,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
 });
-
-
-
-
 
 Route::post('/login', [LoginController::class, 'login']);
 
