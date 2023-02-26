@@ -17,9 +17,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    
-    protected $table = "usuarios";
 
+    protected $table = "usuarios";
+    protected $primaryKey = "codigo_usuario";
     protected $fillable = [
         'nome_usuario',
         'email_usuario',
@@ -35,7 +35,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-   
+
     public function setPasswordAttribute($value)
     {
         if (is_null($value)) {

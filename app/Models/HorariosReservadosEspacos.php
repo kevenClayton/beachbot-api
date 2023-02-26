@@ -9,6 +9,7 @@ class HorariosReservadosEspacos extends Model
 {
     use HasFactory;
     protected $table = "horarios_reservados_espaco";
+    protected $primaryKey = 'codigo_horario_reservado_espaco';
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class);

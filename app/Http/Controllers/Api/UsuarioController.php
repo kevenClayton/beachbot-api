@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class UsuarioController extends Controller
 {

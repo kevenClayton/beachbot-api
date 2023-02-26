@@ -14,28 +14,54 @@ class CriarTabelaHorariosReservadosEspacos extends Migration
     public function up()
     {
         Schema::create('horarios_reservados_espaco', function (Blueprint $table) {
-            $table->id('codigo_horario_espaco');
+            $table->id('codigo_horario_reservado_espaco');
             $table->foreignId('codigo_espaco');
-            $table->string('id_cliente_espaco');
-            $table->dateTime('data_hora_inicio_reservado_espaco');
-            $table->dateTime('data_hora_fim_reservado_espaco');
+            $table->unsignedBigInteger('codigo_cliente_espaco');
+            $table->date('data_reservado_espaco');
+            $table->string('hora_inicio_reservado_espaco');
+            $table->string('hora_fim_reservado_espaco');
             $table->enum('dia_semana_espaco', ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']);
             $table->integer('dia_semana_codigo');
             $table->timestamps();
+
+
+            // $table->unsignedBigInteger('codigo_espaco');
+            // $table->unsignedBigInteger('codigo_tipo_espaco');
+
+            $table->foreign('codigo_cliente_espaco')->references('codigo_cliente')->on('clientes')->onDelete('cascade');
+            // $table->foreign('codigo_tipo_espaco')->references('codigo_tipo_espaco')->on('tipo_espaco')->onDelete('cascade');
+
+
         });
         DB::table('horarios_reservados_espaco')->insert(
             array(
                 [
-                    'id_cliente_espaco'=>1,
+                    'codigo_cliente_espaco'=>1,
                     'codigo_espaco'=>1,
-                    'data_hora_inicio_reservado_espaco' => '2023-02-23 19:00:00',
-                    'data_hora_fim_reservado_espaco' => '2023-02-23 20:00:00',
+                    'data_reservado_espaco' => '2023-02-23',
+                    'hora_inicio_reservado_espaco' => '19:00',
+                    'hora_fim_reservado_espaco' => '20:00',
                 ],
                 [
-                    'id_cliente_espaco'=>2,
+                    'codigo_cliente_espaco'=>2,
                     'codigo_espaco'=>2,
-                    'data_hora_inicio_reservado_espaco' => '2023-02-23 14:00:00',
-                    'data_hora_fim_reservado_espaco' => '2023-02-23 16:00:00',
+                    'data_reservado_espaco' => '2023-02-23',
+                    'hora_inicio_reservado_espaco' => '14:00',
+                    'hora_fim_reservado_espaco' => '16:00',
+                ],
+                [
+                    'codigo_cliente_espaco'=>1,
+                    'codigo_espaco'=>1,
+                    'data_reservado_espaco' => '2023-02-24',
+                    'hora_inicio_reservado_espaco' => '17:00',
+                    'hora_fim_reservado_espaco' => '21:00',
+                ],
+                [
+                    'codigo_cliente_espaco'=>2,
+                    'codigo_espaco'=>2,
+                    'data_reservado_espaco' => '2023-02-25',
+                    'hora_inicio_reservado_espaco' => '18:00',
+                    'hora_fim_reservado_espaco' => '19:00',
                 ],
             ));
     }

@@ -16,8 +16,15 @@ class CriarTabelaEspacoXTipoEspaco extends Migration
     {
         Schema::create('espaco_tipo_espaco', function (Blueprint $table) {
             $table->id('espaco_codigo_espaco');
-            $table->foreignId('codigo_espaco');
-            $table->foreignId('codigo_tipo_espaco');
+            $table->unsignedBigInteger('codigo_espaco');
+            $table->unsignedBigInteger('codigo_tipo_espaco');
+
+            $table->foreign('codigo_espaco')->references('codigo_espaco')->on('espaco')->onDelete('cascade');
+            $table->foreign('codigo_tipo_espaco')->references('codigo_tipo_espaco')->on('tipo_espaco')->onDelete('cascade');
+
+
+
+
             $table->timestamps();
         });
 

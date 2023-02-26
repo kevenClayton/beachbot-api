@@ -11,6 +11,7 @@ class HorariosDisponiveisEspacos extends Model
     use HasFactory;
 
     protected $table = 'horarios_disponiveis_espaco';
+    protected $primaryKey = 'codigo_horario_disponiveis_espaco';
     protected $guarded = [];
     protected $cast = [
         'dia_semana_espaco' => DiasSemana::class

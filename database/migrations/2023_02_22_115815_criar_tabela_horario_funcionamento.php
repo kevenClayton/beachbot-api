@@ -52,20 +52,20 @@ class CriarTabelaHorarioFuncionamento extends Migration
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'sexta',
-                    'horario_funcionamento_inicio' => '13:00:00',
-                    'horario_funcionamento_fim' => '23:00:00',
+                    'horario_funcionamento_inicio' => '13:00',
+                    'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 5,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'sabado',
-                    'horario_funcionamento_inicio' => '08:00:00',
-                    'horario_funcionamento_fim' => '18:00:00',
+                    'horario_funcionamento_inicio' => '08:00',
+                    'horario_funcionamento_fim' => '18:00',
                     'dia_semana_codigo'=> 6,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'domingo',
-                    'horario_funcionamento_inicio' => '08:00:00',
-                    'horario_funcionamento_fim' => '13:00:00',
+                    'horario_funcionamento_inicio' => '08:00',
+                    'horario_funcionamento_fim' => '13:00',
                     'dia_semana_codigo'=> 0,
                 ],
 

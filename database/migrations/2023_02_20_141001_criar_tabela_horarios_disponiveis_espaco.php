@@ -15,7 +15,7 @@ class CriarTabelaHorariosDisponiveisEspaco extends Migration
     public function up()
     {
         Schema::create('horarios_disponiveis_espaco', function (Blueprint $table) {
-            $table->id('codigo_horario_espaco');
+            $table->id('codigo_horario_disponiveis_espaco');
             $table->enum('dia_semana_espaco', ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']);
             $table->integer('dia_semana_codigo');
             $table->foreignId('codigo_espaco');

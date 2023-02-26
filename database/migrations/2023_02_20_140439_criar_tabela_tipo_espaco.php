@@ -17,7 +17,9 @@ class CriarTabelaTipoEspaco extends Migration
         Schema::create('tipo_espaco', function (Blueprint $table) {
             $table->id('codigo_tipo_espaco');
             $table->string('nome_tipo_espaco');
+            $table->longText('descricao')->nullable();
             $table->string('foto_tipo_espaco')->nullable();
+            $table->string('icone_tipo_espaco')->nullable();
             $table->timestamps();
         });
 

@@ -10,6 +10,7 @@ class HorarioFuncionamento extends Model
     use HasFactory;
 
     protected $table = 'horario_funcionamento';
+    protected $primaryKey = 'codigo_horario_funcionamento';
     protected $guarded = [];
     protected $cast = [
         'dia_semana_espaco' => DiasSemana::class
