@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Espaco;
 use App\Models\HorariosReservadosEspacos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -13,6 +14,10 @@ use App\Models\HorarioFuncionamento;
 use App\Enums\DiasSemana;
 use Throwable;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use DateTime;
+
 
 class AgendamentoController extends Controller
 {
@@ -140,6 +145,93 @@ class AgendamentoController extends Controller
 
 
     // ---- CHAMADAS OK ------//
+
+    public function criarReservaHorario(Request $request){
+        try{
+            $dados = $request->all();
+            $dataReserva = $dados['data_reservado_espaco'];
+            $horaInicioReserva = $dados['hora_inicio_reservado_espaco'];
+            $horaFimReserva = $dados['hora_fim_reservado_espaco'];
+            $codigoEspaco = $dados['codigo_espaco'];
+            $codigoCliente = $dados['codigo_cliente_espaco'];
+
+            $regras = [
+                'data_reservado_espaco' => 'required',
+                'hora_inicio_reservado_espaco' => 'required',
+                'hora_fim_reservado_espaco' => 'required',
+                'codigo_espaco' => 'required',
+                'codigo_cliente_espaco' => 'required',
+            ];
+
+            $mesagens = [
+                'data_reservado_espaco.required' => 'Parâmetro "dias" é obrigatório!',
+                'hora_inicio_reservado_espaco.required' => 'Parâmetro "horaInicio" é obrigatório!',
+                'hora_fim_reservado_espaco.required' => 'Parâmetro "horaFim" é obrigatório!',
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+                'codigo_cliente_espaco.required' => 'Parâmetro "codigo_cliente_espaco" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dados, $regras, $mesagens);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
+            }
+
+            $espaco = Espaco::find($codigoEspaco);
+
+            if($espaco->situacao == false){
+                return response()->json([
+                    'errro'=> true,
+                    'message'=> 'O espaço está desativado, e não pode fazer reserva de horário',
+                ], 422);
+            }
+
+            $podeSerCriado = $this->podeSerCriadoNoEspaco($dataReserva, $horaInicioReserva, $horaFimReserva, $codigoEspaco);
+            if($podeSerCriado == false){
+                return response()->json([
+                    'errro'=> true,
+                    'message'=> 'Já existe reserva neste horário para o espaço '.$espaco->nome_espaco.'',
+                ], 422);
+            }
+
+            $horarioReserado = HorariosReservadosEspacos::create($dados);
+
+            return response()->json([
+                    'message'=> 'Horário reservado com sucesso',
+                    'reserva'=> $horarioReserado,
+                ], 200);
+
+        }catch(Throwable $e){
+            return response()->json([
+                'error'=> true,
+                'message'=> $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function podeSerCriadoNoEspaco($data, $horaInicio, $horaFim, $codigoEspaco)
+    {
+        // combinar a data e a hora de início e fim para criar objetos DateTime
+        $dataHoraInicio = new DateTime("$data $horaInicio");
+        $dataHoraFim = new DateTime("$data $horaFim");
+        $dataHoraInicio = $dataHoraInicio->format('Y-m-d H:i');
+        $dataHoraFim = $dataHoraFim->format('Y-m-d H:i');
+        // verificar se há algum agendamento existente que conflite com as datas e horas fornecidas
+        $conflito = HorariosReservadosEspacos::where(function ($query) use ($dataHoraInicio, $dataHoraFim, $codigoEspaco) {
+            $query->where('codigo_espaco', $codigoEspaco)
+                ->whereBetween(DB::raw("CONCAT(data_reservado_espaco, ' ', hora_inicio_reservado_espaco)"), [$dataHoraInicio, $dataHoraFim])
+                  ->orWhere(function ($query) use ($dataHoraInicio, $dataHoraFim) {
+                      $query->where(DB::raw("CONCAT(data_reservado_espaco, ' ', hora_inicio_reservado_espaco)"), '<', $dataHoraInicio)
+                            ->where(DB::raw("CONCAT(data_reservado_espaco, ' ', hora_fim_reservado_espaco)"), '>', $dataHoraFim);
+                  });
+        })->exists();
+
+        return !$conflito;
+    }
     public function retornarHorarioFuncionamento(Request $request){
         try{
 
@@ -166,7 +258,31 @@ class AgendamentoController extends Controller
     public function retornarHorariosAgendadosPorPeriodo(Request $request){
         try{
 
-            $dias = $request['dias'];
+            $dados = $request->all();
+
+
+            $regras = [
+                'dias' => 'required',
+                'codigo_espaco' => 'required',
+            ];
+
+            $mesagens = [
+                'data.required' => 'Parâmetro "dias" é obrigatório!',
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dados, $regras, $mesagens);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
+            }
+
+            $dias = $dados['dias'];
+            $codigoEspaco = $dados['codigo_espaco'];
 
             $periodoDias = $this->diasPorPeriodo( $dias);
 
@@ -174,7 +290,7 @@ class AgendamentoController extends Controller
 
             foreach($periodoDias as $dia){
 
-                $horarios_agendados = $this->horariosAgendadosPorDia($dia->toDateString()); // função para obter horários já agendados
+                $horarios_agendados = $this->horariosAgendadosPorDia($dia->toDateString(),$codigoEspaco); // função para obter horários já agendados
 
                 $datas[] = [
                     'data' => $dia->locale('pt-br')->toDateString(),
@@ -210,8 +326,34 @@ class AgendamentoController extends Controller
     }
     public function retornarHorariosAgendadosPorDia(Request $request){
         try{
-            $data = $request->all()['data'];
-            $horariosAgendadosPorDia = $this->horariosAgendadosPorDia( $data );
+
+            $dados = $request->all();
+
+
+            $regras = [
+                'data' => 'required',
+                'codigo_espaco' => 'required',
+            ];
+
+            $mesagens = [
+                'data.required' => 'Parâmetro "data" é obrigatório!',
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dados, $regras, $mesagens);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
+            }
+
+            $data = $dados['data'];
+            $codigoEspaco = $dados['codigo_espaco'];
+
+            $horariosAgendadosPorDia = $this->horariosAgendadosPorDia($data,$codigoEspaco);
 
             return response()->json([
                 'message'=> 'Horários agendados do dia '.$data.'',
@@ -229,16 +371,31 @@ class AgendamentoController extends Controller
         try{
             $dadosRequest = $request->all();
 
-            if(!isset($dadosRequest['dias'])){
+
+            $regras = [
+                'codigo_espaco' => 'required',
+                'dias' => 'required',
+            ];
+
+            $mesagens = [
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+                'dias.required' => 'Parâmetro "dias" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dadosRequest, $regras, $mesagens);
+
+            if ($validator->fails()) {
                 return response()->json([
-                    'error'=> true,
-                    'message'=> 'Parâmetro "dias" é obrigatório!',
-                ], 400);
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
             }
 
             $dias = $dadosRequest['dias'];
+            $codigoEspaco = $dadosRequest['codigo_espaco'];
 
-            $periodoDias = $this->diasPorPeriodo( $dias);
+            $periodoDias = $this->diasPorPeriodo($dias);
 
             $datas = [];
 
@@ -248,7 +405,7 @@ class AgendamentoController extends Controller
 
                 $horario_de_funcionamento = $this->horarioFuncionamento($diaDaSemanaCodigo);
 
-                $horarios_agendados = $this->horariosAgendadosPorDia($dia->toDateString()); // função para obter horários já agendados
+                $horarios_agendados = $this->horariosAgendadosPorDia($dia->toDateString(), $codigoEspaco); // função para obter horários já agendados
                 $horariosDisponiveis = $this->calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados);
 
                 $datas[] = [
@@ -280,6 +437,25 @@ class AgendamentoController extends Controller
         try{
             $dadosRequest = $request->all();
 
+
+            $regras = [
+                'codigo_espaco' => 'required',
+            ];
+
+            $mesagens = [
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dadosRequest, $regras, $mesagens);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
+            }
+
             if(isset($dadosRequest['data'])){
                 $data = $dadosRequest['data'];
                 $diaDaSemanaCodigo = $this->saberDiaSemanaCodigo($data);
@@ -288,9 +464,11 @@ class AgendamentoController extends Controller
                 $data = Carbon::now()->toDateString();
             }
 
+            $codigoEspaco = $dadosRequest['codigo_espaco'];
+
             $horario_de_funcionamento = $this->horarioFuncionamento($diaDaSemanaCodigo);
 
-            $horarios_agendados = $this->horariosAgendadosPorDia($data); // função para obter horários já agendados
+            $horarios_agendados = $this->horariosAgendadosPorDia($data, $codigoEspaco); // função para obter horários já agendados
             $horariosDisponiveis = $this->calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados);
 
             return response()->json([
@@ -318,9 +496,10 @@ class AgendamentoController extends Controller
         }
         return $horario_de_funcionamento;
     }
-    private function horariosAgendadosPorDia($data)
+    private function horariosAgendadosPorDia($data, $codigoEspaco)
     {
         $horariosReservadosEspacos = HorariosReservadosEspacos::where('data_reservado_espaco', $data)
+                                ->where('codigo_espaco', $codigoEspaco)
                                 ->get(['hora_inicio_reservado_espaco', 'hora_fim_reservado_espaco'])
                                 ->toArray();
         $horariosReservados = [];
@@ -365,11 +544,22 @@ class AgendamentoController extends Controller
         try{
             $datas = [];
 
-            if(!isset($request->all()['dias'])){
+            $regras = [
+                'dias' => 'required',
+            ];
+
+            $mesagens = [
+                'dias.required' => 'Parâmetro "dias" é obrigatório!',
+            ];
+
+            $validator = Validator::make($request->all(), $regras, $mesagens);
+
+            if ($validator->fails()) {
                 return response()->json([
-                    'error'=> true,
-                    'message'=> 'Parâmetro "dias" é obrigatório!',
-                ], 400);
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->getMessageBag(),
+                ],400);
             }
 
             $numeroDias = $request->all()['dias'];
@@ -399,6 +589,22 @@ class AgendamentoController extends Controller
         }
 
     }
+
+    public function retornarHorariosDisponiveisTodosEspacos(Request $request)
+    {
+        $espacos = Espaco::all();
+
+        $horariosDisponiveis = collect();
+
+        foreach ($espacos as $espaco) {
+            $horariosDisponiveis = $horariosDisponiveis->merge($espaco->horariosDisponiveis);
+        }
+
+        return response()->json([
+            'data' => $horariosDisponiveis,
+        ]);
+    }
+
     function adicionar_horario($horario, $minutos) {
         $horas_minutos = explode(':', $horario);
         $horas = (int) $horas_minutos[0];
@@ -408,4 +614,6 @@ class AgendamentoController extends Controller
         $minutos = $minutos % 60;
         return sprintf('%02d:%02d', $horas, $minutos);
     }
+
+
 }

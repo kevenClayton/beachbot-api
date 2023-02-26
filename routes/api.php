@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum', 'treblle'])->group(function () {
         Route::get('/horarios-agendados-periodo', 'retornarHorariosAgendadosPorPeriodo');
         Route::get('/retornar-proximos-dias', 'retornarProximosDias');
         Route::get('/horarios-funcionamento', 'retornarHorarioFuncionamento');
+        Route::post('/criar', 'criarReservaHorario');
     });
 
     Route::controller(EspacoController::class)->prefix('espaco')->group(function () {

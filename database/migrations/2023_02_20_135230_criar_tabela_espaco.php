@@ -19,6 +19,7 @@ class CriarTabelaEspaco extends Migration
             $table->string('nome_espaco');
             $table->string('descricao_espaco')->nullable();
             $table->string('foto_espaco')->nullable();
+            $table->boolean('situacao')->default(true);
             $table->string('tamanho_espaco')->nullable();
             $table->timestamps();
         });
