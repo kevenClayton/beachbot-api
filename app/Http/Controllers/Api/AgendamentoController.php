@@ -572,43 +572,6 @@ class AgendamentoController extends Controller
         }
         return $horariosReservados;
     }
-    private function horariosAgendadosComClientePorDia($data, $codigoEspaco)
-    {
-        $horariosReservadosEspacos = HorariosReservadosEspacos::with('cliente')->where('data_reservado_espaco', $data)
-                                ->where('codigo_espaco', $codigoEspaco)
-                                ->get();
-
-        $horariosReservados = [];
-
-        $diaDaSemanaCodigo = $this->saberDiaSemanaCodigo($data);
-        $horario_de_funcionamento = $this->horarioFuncionamento($diaDaSemanaCodigo);
-        $horarios_agendados = $this->horariosAgendadosPorDia($data, $codigoEspaco); // função para obter horários já agendados
-        $horariosDisponiveis = $this->calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados);
-
-
-        foreach ($horariosDisponiveis as $horarios){
-
-            foreach($horariosReservadosEspacos as $horarioReservadoCliente){
-                if($horarioReservadoCliente->hora_inicio_reservado_espaco == $horarios){
-                    $horariosReservados[] = [
-                        'hora_inicio' => $horarios['hora_inicio_reservado_espaco'],
-                        'hora_fim' => $horarios['hora_fim_reservado_espaco'],
-                        'espaco' => $codigoEspaco,
-                        'cliente' => $horarioReservadoCliente['cliente'][0]['nome_cliente'],
-                        'estado' => 'reservado',
-                    ];
-                }
-
-                $horariosReservados[] = [
-                    'horario' => $horarios,
-                    'espaco' => $codigoEspaco,
-                    'cliente' => null,
-                    'estado' => 'disponivel',
-                ];
-
-        }
-        return $horariosReservados;
-    }
 
     private function calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados)
     {
