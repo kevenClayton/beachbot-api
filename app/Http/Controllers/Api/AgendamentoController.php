@@ -483,6 +483,58 @@ class AgendamentoController extends Controller
         }
     }
 
+    public function retornarAgendaQuadraPorDia(Request $request){
+
+        try{
+
+            $dadosRequest = $request->all();
+
+
+            $regras = [
+                'codigo_espaco' => 'required',
+            ];
+
+            $mesagens = [
+                'codigo_espaco.required' => 'Parâmetro "codigo_espaco" é obrigatório!',
+            ];
+
+            $validator = Validator::make($dadosRequest, $regras, $mesagens);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Erro validação',
+                    'erro'=>true,
+                    'errors' => $validator->errors(),
+                ],400);
+            }
+
+            if(isset($dadosRequest['data'])){
+                $data = $dadosRequest['data'];
+                $diaDaSemanaCodigo = $this->saberDiaSemanaCodigo($data);
+            }else{
+                $diaDaSemanaCodigo = Carbon::now()->dayOfWeek; //Pega dia atual
+                $data = Carbon::now()->toDateString();
+            }
+
+            $codigoEspaco = $dadosRequest['codigo_espaco'];
+
+            $horario_de_funcionamento = $this->horarioFuncionamento($diaDaSemanaCodigo);
+
+            $horarios_agendados = $this->horariosAgendadosComClientePorDia($data, $codigoEspaco); // função para obter horários já agendados
+            $horariosDisponiveis = $this->calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados);
+
+            return response()->json([
+                'message'=>'Horários disponíveis do dia '.$data.'!',
+                'horarios'=>$horariosDisponiveis
+            ],200);
+        }catch(Throwable $e){
+            return response()->json([
+                'error'=> true,
+                'message'=> $e->getMessage(),
+            ], 400);
+        }
+    }
+
     function saberDiaSemanaCodigo($data){
         $diaDaSemanaCodigo = Carbon::parse($data)->dayOfWeek;
         return $diaDaSemanaCodigo;
@@ -517,6 +569,43 @@ class AgendamentoController extends Controller
             }else{
                 $horariosReservados[] = $horarios['hora_inicio_reservado_espaco'];
             }
+        }
+        return $horariosReservados;
+    }
+    private function horariosAgendadosComClientePorDia($data, $codigoEspaco)
+    {
+        $horariosReservadosEspacos = HorariosReservadosEspacos::with('cliente')->where('data_reservado_espaco', $data)
+                                ->where('codigo_espaco', $codigoEspaco)
+                                ->get();
+
+        $horariosReservados = [];
+
+        $diaDaSemanaCodigo = $this->saberDiaSemanaCodigo($data);
+        $horario_de_funcionamento = $this->horarioFuncionamento($diaDaSemanaCodigo);
+        $horarios_agendados = $this->horariosAgendadosPorDia($data, $codigoEspaco); // função para obter horários já agendados
+        $horariosDisponiveis = $this->calcular_horarios_disponiveis($horario_de_funcionamento, $horarios_agendados);
+
+
+        foreach ($horariosDisponiveis as $horarios){
+
+            foreach($horariosReservadosEspacos as $horarioReservadoCliente){
+                if($horarioReservadoCliente->hora_inicio_reservado_espaco == $horarios){
+                    $horariosReservados[] = [
+                        'hora_inicio' => $horarios['hora_inicio_reservado_espaco'],
+                        'hora_fim' => $horarios['hora_fim_reservado_espaco'],
+                        'espaco' => $codigoEspaco,
+                        'cliente' => $horarioReservadoCliente['cliente'][0]['nome_cliente'],
+                        'estado' => 'reservado',
+                    ];
+                }
+
+                $horariosReservados[] = [
+                    'horario' => $horarios,
+                    'espaco' => $codigoEspaco,
+                    'cliente' => null,
+                    'estado' => 'disponivel',
+                ];
+
         }
         return $horariosReservados;
     }

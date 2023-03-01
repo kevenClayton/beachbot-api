@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\ClienteController;
 |
 */
 
-Route::middleware(['auth:sanctum', 'treblle'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(UsuarioController::class)->prefix('usuario')->group(function () {
         Route::get('/listar', 'listar');
@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum', 'treblle'])->group(function () {
     });
 
     Route::controller(AgendamentoController::class)->prefix('agendamento')->group(function () {
+        Route::get('/agenda-quadra-no-dia', 'retornarAgendaQuadraPorDia'); // mostra os disponíveis e indiposníveis
         Route::get('/horarios-disponiveis-no-dia', 'retornarHorariosDisponveisPorDia');
         Route::get('/horarios-agendados-no-dia', 'retornarHorariosAgendadosPorDia');
         Route::get('/horarios-disponiveis-periodo', 'retornarHorariosDisponveisPorPeriodo');
