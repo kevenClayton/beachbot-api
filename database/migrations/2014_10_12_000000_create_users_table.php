@@ -31,7 +31,12 @@ class CreateUsersTable extends Migration
                 [
                 'nome_usuario' => 'Administrador',
                 'email_usuario' => 'administrador@beachbot.com.br',
-                'password' => '$2y$10$Dfbgohf8WCW1dxV9rppZOOi07kOzZmSsyDL/wbeHYzqGryJfz1Qba',
+                'password' => bcrypt('123456'),
+                ],
+                [
+                'nome_usuario' => 'Cairo campos',
+                'email_usuario' => 'admin@demo.com',
+                'password' => bcrypt('demo'),
                 ],
 
             )
