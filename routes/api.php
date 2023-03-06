@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LoginController;
+use App\Models\Estabelecimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UsuarioController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\AgendamentoController;
 use App\Http\Controllers\Api\EspacoController;
 use App\Http\Controllers\Api\EspacoTipoController;
 use App\Http\Controllers\Api\ClienteController;
+use App\Http\Controllers\Api\EstabelecimentoController;
 
 
 /*
@@ -59,6 +61,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/atualizar', 'atualizarCliente');
         Route::get('/ver', 'verCliente');
         Route::get('/listar', 'listarCliente');
+    });
+
+    Route::controller(EstabelecimentoController::class)->prefix('estabelecimento')->group(function () {
+        Route::post('/criar', 'criarEstabelecimento');
+        Route::post('/excluir', 'excluirEstabelecimento');
+        Route::put('/atualizar', 'atualizarEstabelecimento');
+        Route::get('/ver', 'verEstabelecimento');
+        Route::get('/listar', 'listarEstabelecimento');
     });
 
 });
