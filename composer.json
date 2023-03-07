@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "nesbot/carbon": "^2.66",
+        "sentry/sdk": "^3.3",
         "spatie/opening-hours": "^2.13",
         "treblle/treblle-laravel": "^2.8"
     },
