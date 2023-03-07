@@ -97,7 +97,7 @@ class EspacoController extends Controller
     public function listarEspaco(){
         try{
 
-            $listaEspacos = Espaco::with('tipoEspaco')->paginate($perPage = 20);
+            $listaEspacos = Espaco::with('tipoEspaco')->paginate(10);
 
             return response()->json([
                 'message'=> 'Lista dos espaços',
