@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Carbon;
 class Espaco extends Model
 {
     use HasFactory;
@@ -12,6 +12,16 @@ class Espaco extends Model
     protected $table = 'espaco';
     protected $primaryKey = 'codigo_espaco';
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y H:i');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y H:i');
+    }
 
     public function tipoEspaco()
     {
