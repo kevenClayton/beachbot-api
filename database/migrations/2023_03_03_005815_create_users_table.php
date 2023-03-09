@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('cpf_cnpj_usuario')->nullable();
             $table->string('celular_usuario')->nullable();
             $table->string('telefone_usuario')->nullable();
-            $table->unsignedBigInteger('codigo_estabelecimento_usuario');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

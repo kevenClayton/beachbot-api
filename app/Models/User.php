@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Escopos\EstabelecimentoEscopo;
+use App\Models\Estabelecimento;
 
 class User extends Authenticatable
 {
@@ -54,4 +55,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function estabelecimentos()
+    {
+        return $this->belongsTo(Estabelecimento::class, 'codigo_estabelecimento_usuario', 'codigo_estabelecimento');
+    }
 }

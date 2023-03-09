@@ -26,6 +26,24 @@ use App\Http\Controllers\Api\PlanoController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::middleware(['administradorSistema'])->group(function () {
+        Route::controller(EstabelecimentoController::class)->prefix('estabelecimento')->group(function () {
+            Route::post('/criar', 'criarEstabelecimento');
+            Route::post('/excluir', 'excluirEstabelecimento');
+            Route::put('/atualizar', 'atualizarEstabelecimento');
+            Route::get('/ver', 'verEstabelecimento');
+            Route::get('/listar', 'listarEstabelecimento');
+        });
+
+        Route::controller(PlanoController::class)->prefix('plano')->group(function () {
+            Route::post('/criar', 'criarPlano');
+            Route::post('/excluir', 'excluirPlano');
+            Route::put('/atualizar', 'atualizarPlano');
+            Route::get('/ver', 'verPlano');
+            Route::get('/listar', 'listarPlano');
+        });
+    });
+
     Route::controller(UsuarioController::class)->prefix('usuario')->group(function () {
         Route::get('/listar', 'listar');
         Route::get('/mostrar', 'mostrar');
@@ -66,21 +84,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/listar', 'listarCliente');
     });
 
-    Route::controller(EstabelecimentoController::class)->prefix('estabelecimento')->group(function () {
-        Route::post('/criar', 'criarEstabelecimento');
-        Route::post('/excluir', 'excluirEstabelecimento');
-        Route::put('/atualizar', 'atualizarEstabelecimento');
-        Route::get('/ver', 'verEstabelecimento');
-        Route::get('/listar', 'listarEstabelecimento');
-    });
 
-    Route::controller(PlanoController::class)->prefix('plano')->group(function () {
-        Route::post('/criar', 'criarPlano');
-        Route::post('/excluir', 'excluirPlano');
-        Route::put('/atualizar', 'atualizarPlano');
-        Route::get('/ver', 'verPlano');
-        Route::get('/listar', 'listarPlano');
-    });
+
 
 });
 
