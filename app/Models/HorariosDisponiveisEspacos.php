@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\DiasSemana;
-
+use App\Models\Escopos\EstabelecimentoEscopo;
 class HorariosDisponiveisEspacos extends Model
 {
     use HasFactory;
@@ -16,6 +16,13 @@ class HorariosDisponiveisEspacos extends Model
     protected $cast = [
         'dia_semana_espaco' => DiasSemana::class
     ];
-
+    public function apply(Builder $builder, Model $model): void
+    {
+        $builder->where('codigo_estabelecimento', Auth::user()->codigo_estabelecimento);
+    }
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new EstabelecimentoEscopo);
+    }
 
 }

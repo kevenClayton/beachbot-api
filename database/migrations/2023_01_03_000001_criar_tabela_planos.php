@@ -35,9 +35,16 @@ class CriarTabelaPlanos extends Migration
                 [
                     'nome_plano' => 'Administrador do sistema',
                     'beneficios' => '',
-                    'valor_mensal_plano' => '(31) 99254-4367',
-                    'valor_anual_plano' => 'administrador@beachbot.com.br',
+                    'valor_mensal_plano' => '0',
+                    'valor_anual_plano' => '0',
                     'eh_admin' => true,
+                ],
+                [
+                    'nome_plano' => 'Plano Pro',
+                    'beneficios' => '',
+                    'valor_mensal_plano' => '39.90',
+                    'valor_anual_plano' => '39.90',
+                    'eh_admin' => false,
                 ],
 
             )

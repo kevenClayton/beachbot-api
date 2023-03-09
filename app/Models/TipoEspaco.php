@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Escopos\EstabelecimentoEscopo;
 class TipoEspaco extends Model
 {
     use HasFactory;
@@ -15,5 +15,9 @@ class TipoEspaco extends Model
     {
         return $this->belongsToMany('App\Models\Espaco', 'espaco_tipo_espaco', 'codigo_tipo_espaco', 'codigo_espaco');
 
+    }
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new EstabelecimentoEscopo);
     }
 }

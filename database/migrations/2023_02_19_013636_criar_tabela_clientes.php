@@ -22,17 +22,27 @@ class CriarTabelaClientes extends Migration
             $table->string('telefone_cliente')->nullable();
             $table->string('cpf_cnpj')->nullable()->unique();
             $table->string('doc')->nullable();
+            $table->unsignedBigInteger('codigo_estabelecimento');
             $table->timestamps();
+
+            $table->foreign('codigo_estabelecimento')->references('codigo_estabelecimento')->on('estabelecimentos');
         });
         DB::table('clientes')->insert(
             array(
                 [
                 'nome_cliente' => 'Keven Clayton',
                 'email_cliente' => 'keven.developer@gmail.com',
+                'codigo_estabelecimento' => 1,
                 ],
                 [
                 'nome_cliente' => 'Cairo Campos',
                 'email_cliente' => 'cairocampos98@gmail.com',
+                'codigo_estabelecimento' => 1,
+                ],
+                [
+                'nome_cliente' => 'Numar cliente',
+                'email_cliente' => 'numar@gmail.com',
+                'codigo_estabelecimento' => 2,
                 ],
             ));
     }

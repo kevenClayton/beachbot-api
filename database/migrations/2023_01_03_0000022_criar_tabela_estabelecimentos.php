@@ -38,6 +38,14 @@ class CriarTabelaEstabelecimentos extends Migration
                     'situacao_pagamento_estabelecimento' => true,
                     'codigo_plano_estabelecimento' => 1,
                 ],
+                [
+                    'nome_estabelecimento' => 'Numar Sports Beach',
+                    'cnpj_cpf_estabelecimento' => '019.224.231-39',
+                    'celular_estabelecimento' => '(31) 99254-4367',
+                    'email_estabelecimento' => 'administrador@numar.com.br',
+                    'situacao_pagamento_estabelecimento' => true,
+                    'codigo_plano_estabelecimento' => 2,
+                ],
 
             )
         );

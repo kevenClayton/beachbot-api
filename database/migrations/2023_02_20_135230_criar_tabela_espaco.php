@@ -21,25 +21,53 @@ class CriarTabelaEspaco extends Migration
             $table->string('foto_espaco')->nullable();
             $table->boolean('situacao')->default(true);
             $table->string('tamanho_espaco')->nullable();
+
+            $table->unsignedBigInteger('codigo_estabelecimento');
             $table->timestamps();
+
+            $table->foreign('codigo_estabelecimento')->references('codigo_estabelecimento')->on('estabelecimentos');
         });
         DB::table('espaco')->insert(
             array(
                 [
                     'nome_espaco' => 'Quadra 1',
                     'descricao_espaco' => 'Quadra perto do bar',
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'nome_espaco' => 'Quadra 2',
                     'descricao_espaco' => 'Quadra perto do vestiário',
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'nome_espaco' => 'Quadra 3',
                     'descricao_espaco' => 'Quadra perto da arquibanca',
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'nome_espaco' => 'Quadra 4',
                     'descricao_espaco' => 'Quadra perto do portão',
+                    'codigo_estabelecimento' => 1,
+                ],
+                [
+                    'nome_espaco' => 'Quadra 1 numar',
+                    'descricao_espaco' => 'Quadra perto do bar',
+                    'codigo_estabelecimento' => 2,
+                ],
+                [
+                    'nome_espaco' => 'Quadra 2 numar',
+                    'descricao_espaco' => 'Quadra perto do vestiário',
+                    'codigo_estabelecimento' => 2,
+                ],
+                [
+                    'nome_espaco' => 'Quadra 3 numar',
+                    'descricao_espaco' => 'Quadra perto da arquibanca',
+                    'codigo_estabelecimento' => 2,
+                ],
+                [
+                    'nome_espaco' => 'Quadra 4 numar',
+                    'descricao_espaco' => 'Quadra perto do portão',
+                    'codigo_estabelecimento' => 2,
                 ],
 
             )

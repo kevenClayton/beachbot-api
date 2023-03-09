@@ -20,7 +20,10 @@ class CriarTabelaHorariosDisponiveisEspaco extends Migration
             $table->integer('dia_semana_codigo');
             $table->foreignId('codigo_espaco');
             $table->string('horario_espaco');
+            $table->unsignedBigInteger('codigo_estabelecimento');
             $table->timestamps();
+
+            $table->foreign('codigo_estabelecimento')->references('codigo_estabelecimento')->on('estabelecimentos');
         });
     }
 

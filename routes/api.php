@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\EspacoController;
 use App\Http\Controllers\Api\EspacoTipoController;
 use App\Http\Controllers\Api\ClienteController;
 use App\Http\Controllers\Api\EstabelecimentoController;
+use App\Http\Controllers\Api\PlanoController;
 
 
 /*
@@ -48,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/ver', 'verEspaco');
         Route::get('/listar', 'listarEspaco');
     });
+
     Route::controller(EspacoTipoController::class)->prefix('tipo-espaco')->group(function () {
         Route::post('/criar', 'criarTipoEspaco');
         Route::post('/excluir', 'excluirTipoEspaco');
@@ -55,6 +57,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/ver', 'verTipoEspaco');
         Route::get('/listar', 'listarTipoEspaco');
     });
+
     Route::controller(ClienteController::class)->prefix('cliente')->group(function () {
         Route::post('/criar', 'criarCliente');
         Route::post('/excluir', 'excluirCliente');
@@ -69,6 +72,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/atualizar', 'atualizarEstabelecimento');
         Route::get('/ver', 'verEstabelecimento');
         Route::get('/listar', 'listarEstabelecimento');
+    });
+
+    Route::controller(PlanoController::class)->prefix('plano')->group(function () {
+        Route::post('/criar', 'criarPlano');
+        Route::post('/excluir', 'excluirPlano');
+        Route::put('/atualizar', 'atualizarPlano');
+        Route::get('/ver', 'verPlano');
+        Route::get('/listar', 'listarPlano');
     });
 
 });

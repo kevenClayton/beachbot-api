@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Planos extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'codigo_plano';
+    protected $guarded = [];
 }

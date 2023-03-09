@@ -33,79 +33,95 @@ class CriarTabelaEspacoXTipoEspaco extends Migration
                 [
                     'codigo_espaco' => '1',
                     'codigo_tipo_espaco' => '1',
+
                 ],
                 [
                     'codigo_espaco' => '1',
                     'codigo_tipo_espaco' => '2',
+
                 ],
                 [
                     'codigo_espaco' => '1',
                     'codigo_tipo_espaco' => '3',
+
                 ],
                 [
                     'codigo_espaco' => '1',
                     'codigo_tipo_espaco' => '4',
+
                 ],
 
                 [
                     'codigo_espaco' => '2',
                     'codigo_tipo_espaco' => '1',
+
                 ],
 
                 [
                     'codigo_espaco' => '2',
                     'codigo_tipo_espaco' => '2',
+
                 ],
 
                 [
                     'codigo_espaco' => '2',
                     'codigo_tipo_espaco' => '3',
+
                 ],
 
                 [
                     'codigo_espaco' => '2',
                     'codigo_tipo_espaco' => '4',
+
                 ],
 
 
                 [
                     'codigo_espaco' => '3',
                     'codigo_tipo_espaco' => '1',
+
                 ],
 
                 [
                     'codigo_espaco' => '3',
                     'codigo_tipo_espaco' => '2',
+
                 ],
 
                 [
                     'codigo_espaco' => '3',
                     'codigo_tipo_espaco' => '3',
+
                 ],
 
                 [
                     'codigo_espaco' => '3',
                     'codigo_tipo_espaco' => '4',
+
                 ],
 
                 [
                     'codigo_espaco' => '4',
                     'codigo_tipo_espaco' => '1',
+
                 ],
 
                 [
                     'codigo_espaco' => '4',
                     'codigo_tipo_espaco' => '2',
+
                 ],
 
                 [
                     'codigo_espaco' => '4',
                     'codigo_tipo_espaco' => '3',
+
                 ],
 
                 [
                     'codigo_espaco' => '4',
                     'codigo_tipo_espaco' => '4',
+
                 ],
 
 

@@ -24,9 +24,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->unsignedBigInteger('codigo_estabelecimento');
             $table->timestamps();
 
-            $table->foreign('codigo_estabelecimento_usuario')->references('codigo_estabelecimento')->on('estabelecimentos');
+            $table->foreign('codigo_estabelecimento')->references('codigo_estabelecimento')->on('estabelecimentos');
         });
 
         DB::table('usuarios')->insert(
@@ -36,12 +37,28 @@ class CreateUsersTable extends Migration
                 'email_usuario' => 'administrador@beachbot.com.br',
                 'codigo_estabelecimento_usuario' => '1',
                 'password' => bcrypt('123456'),
+                'codigo_estabelecimento' => 1,
                 ],
                 [
                 'nome_usuario' => 'Cairo campos',
                 'email_usuario' => 'admin@demo.com',
                 'codigo_estabelecimento_usuario' => '1',
                 'password' => bcrypt('123456'),
+                'codigo_estabelecimento' => 1,
+                ],
+                [
+                'nome_usuario' => 'Administrador',
+                'email_usuario' => 'administrador@numar.com.br',
+                'codigo_estabelecimento_usuario' => '1',
+                'password' => bcrypt('123456'),
+                'codigo_estabelecimento' => 2,
+                ],
+                [
+                'nome_usuario' => 'Cairo campos',
+                'email_usuario' => 'admin@numar.com',
+                'codigo_estabelecimento_usuario' => '1',
+                'password' => bcrypt('123456'),
+                'codigo_estabelecimento' => 2,
                 ],
 
             )

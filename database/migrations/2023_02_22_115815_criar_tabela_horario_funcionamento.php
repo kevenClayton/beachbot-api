@@ -21,7 +21,10 @@ class CriarTabelaHorarioFuncionamento extends Migration
             $table->integer('dia_semana_codigo');
             $table->string('horario_funcionamento_inicio');
             $table->string('horario_funcionamento_fim');
+            $table->unsignedBigInteger('codigo_estabelecimento');
             $table->timestamps();
+
+            $table->foreign('codigo_estabelecimento')->references('codigo_estabelecimento')->on('estabelecimentos');
         });
 
         DB::table('horario_funcionamento')->insert(
@@ -31,42 +34,99 @@ class CriarTabelaHorarioFuncionamento extends Migration
                     'horario_funcionamento_inicio' => '14:00',
                     'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 1,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'terca',
                     'horario_funcionamento_inicio' => '14:00',
                     'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 2,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'quarta',
                     'horario_funcionamento_inicio' => '14:00',
                     'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 3,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'quinta',
                     'horario_funcionamento_inicio' => '14:00',
                     'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 4,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'sexta',
                     'horario_funcionamento_inicio' => '13:00',
                     'horario_funcionamento_fim' => '23:00',
                     'dia_semana_codigo'=> 5,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'sabado',
                     'horario_funcionamento_inicio' => '08:00',
                     'horario_funcionamento_fim' => '18:00',
                     'dia_semana_codigo'=> 6,
+                    'codigo_estabelecimento' => 1,
                 ],
                 [
                     'dia_semana_horario_funcionamento' => 'domingo',
                     'horario_funcionamento_inicio' => '08:00',
                     'horario_funcionamento_fim' => '13:00',
                     'dia_semana_codigo'=> 0,
+                    'codigo_estabelecimento' => 1,
+                ],
+
+                [
+                    'dia_semana_horario_funcionamento' => 'segunda',
+                    'horario_funcionamento_inicio' => '14:00',
+                    'horario_funcionamento_fim' => '23:00',
+                    'dia_semana_codigo'=> 1,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'terca',
+                    'horario_funcionamento_inicio' => '14:00',
+                    'horario_funcionamento_fim' => '23:00',
+                    'dia_semana_codigo'=> 2,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'quarta',
+                    'horario_funcionamento_inicio' => '14:00',
+                    'horario_funcionamento_fim' => '23:00',
+                    'dia_semana_codigo'=> 3,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'quinta',
+                    'horario_funcionamento_inicio' => '14:00',
+                    'horario_funcionamento_fim' => '23:00',
+                    'dia_semana_codigo'=> 4,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'sexta',
+                    'horario_funcionamento_inicio' => '13:00',
+                    'horario_funcionamento_fim' => '23:00',
+                    'dia_semana_codigo'=> 5,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'sabado',
+                    'horario_funcionamento_inicio' => '08:00',
+                    'horario_funcionamento_fim' => '18:00',
+                    'dia_semana_codigo'=> 6,
+                    'codigo_estabelecimento' =>2,
+                ],
+                [
+                    'dia_semana_horario_funcionamento' => 'domingo',
+                    'horario_funcionamento_inicio' => '08:00',
+                    'horario_funcionamento_fim' => '13:00',
+                    'dia_semana_codigo'=> 0,
+                    'codigo_estabelecimento' =>2,
                 ],
 
             )

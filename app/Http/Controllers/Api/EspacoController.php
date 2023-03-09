@@ -105,7 +105,7 @@ class EspacoController extends Controller
                 'paginacao'=> [
                     'paginaAtual'=> $listaEspacos->currentPage(),
                     'total'=> $listaEspacos->total(),
-                    'QuantidadePorPagina'=> $listaEspacos->perPage(),
+                    'quantidadePorPagina'=> $listaEspacos->perPage(),
                     'ultimaPagina'=> $listaEspacos->lastPage(),
                     'primeiraPagina'=> 1,
                     'maisDeUmaPagina'=> $listaEspacos->hasPages(),
