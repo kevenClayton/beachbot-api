@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\EspacoTipoController;
 use App\Http\Controllers\Api\ClienteController;
 use App\Http\Controllers\Api\EstabelecimentoController;
 use App\Http\Controllers\Api\PlanoController;
+use App\Http\Controllers\Api\WhatsappIntegracaoController;
 
 
 /*
@@ -82,6 +83,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/atualizar', 'atualizarCliente');
         Route::get('/ver', 'verCliente');
         Route::get('/listar', 'listarCliente');
+    });
+
+    Route::controller(WhatsappIntegracaoController::class)->prefix('whatsapp')->group(function () {
+        // Route::post('/enviar-mensagem', 'enviarMensagem');
+        Route::get('/enviar-mensagem', 'enviarMensagem');
     });
 
 
