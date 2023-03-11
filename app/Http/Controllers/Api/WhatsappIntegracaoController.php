@@ -16,11 +16,8 @@ class WhatsappIntegracaoController extends Controller
 
             // Log::debug($request);
 
-            Log::debug( $request->query('hub_challenge'));
-            return response()->json([
-                'data'=> $request->query('hub_challenge')
-            ],200);
-
+            Log::debug($request->query('hub_challenge'));
+            return $request->query('hub_challenge');
 
             // $whatsappServico = new WhatsappServico;
             // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
