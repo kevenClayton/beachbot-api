@@ -31,7 +31,7 @@ class WhatsappIntegracaoController extends Controller
             $whatsappServico = new WhatsappServico;
             $retorno = $whatsappServico->enviarMensagem($mensagem, $destino, $id);
 
-            Log::info('Webhook whatsap, retorno envio mensagem: '. $retorno);
+            Log::debug($retorno);
 
             return 'teste';
 
