@@ -13,11 +13,11 @@ class WhatsappIntegracaoController extends Controller
 {
     public function  enviarMensagem(Request $request){
         try{
-            Log::info('Webhook whatsap, requisição: '.$request->query('body'));
+            Log::info('Webhook whatsap, requisição: '.$request);
             // return $request->query('hub_challenge');
 
             $whatsappServico = new WhatsappServico;
-            $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
+            // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
             return 'teste';
 
 
