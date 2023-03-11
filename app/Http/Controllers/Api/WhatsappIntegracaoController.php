@@ -14,8 +14,8 @@ class WhatsappIntegracaoController extends Controller
     public function  enviarMensagem(Request $request){
         try{
 
-            Log::debug($request);
-            // $dados = $request->all();
+            // Log::debug($request);
+            $dados = $request->all();
             Log::debug($dados);
             return response($dados->hub_challenge)->status(200);
 
