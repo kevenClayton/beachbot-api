@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Whatsapp\WhatsappServico;
 use App\Services\BaseServico;
 use Illuminate\Support\Facades\Log;
-
+use Throwable;
 
 class WhatsappIntegracaoController extends Controller
 {
@@ -17,16 +17,16 @@ class WhatsappIntegracaoController extends Controller
             // Log::debug($request);
 
             Log::debug($request);
-            return response($request->hub_challenge)->status(200);
+            // return response($request->hub_challenge)->status(200);
 
 
-            $whatsappServico = new WhatsappServico;
-            $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
-            dd($retorno);
+            // $whatsappServico = new WhatsappServico;
+            // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
+
 
             return response()->json([
-                'message'=> 'Mensagem enviada com sucesso!',
-                'retornoWhatsapp' =>$retorno
+                'hub_challenge'=> $request->hub_challenge,
+                // 'retornoWhatsapp' =>$retorno
             ],200);
 
         }catch(Throwable $e){
