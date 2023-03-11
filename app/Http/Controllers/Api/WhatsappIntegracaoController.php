@@ -16,8 +16,12 @@ class WhatsappIntegracaoController extends Controller
             Log::info('Webhook whatsap, requisição: '.$request);
             // return $request->query('hub_challenge');
 
+            $dadosWhatsapp =   $request->input();
+            $dadosWhatsapp['entry'][0]['changes'][0]['value']['messages']['text']['body'];
+            Log::info('Mensagem whatsap, requisição: '.$dadosWhatsapp);
+
             $whatsappServico = new WhatsappServico;
-            // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
+            $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
             return 'teste';
 
 
