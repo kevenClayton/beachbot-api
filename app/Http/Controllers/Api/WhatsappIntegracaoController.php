@@ -11,20 +11,21 @@ use Throwable;
 
 class WhatsappIntegracaoController extends Controller
 {
-    public function  enviarMensagem(Request $request){
+    public function  validarWebhook(Request $request){
         try{
 
             // Log::debug($request);
 
-            // Log::debug($request->hub_challenge);
-            return response($request->hub_challenge)->status(200);
+            Log::debug($request->hub_challenge);
+            return response()->json([
+                'data'=> $request->query('hub_challenge')
+            ],200);
 
 
             // $whatsappServico = new WhatsappServico;
             // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
 
 
-            return response()->json($request->hub_challenge,200);
 
         }catch(Throwable $e){
             Log::debug($e);
