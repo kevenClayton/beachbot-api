@@ -15,7 +15,7 @@ class WhatsappIntegracaoController extends Controller
         try{
             Log::info('Webhook whatsap, requisição: '.$request);
             $json = json_decode($request,true);
-            Log::info('Webhook whatsap, requisição JSON: '. $json );
+            Log::info('Webhook whatsap, requisição JSON: '. $json['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']);
 
             // return $request->query('hub_challenge');
 
