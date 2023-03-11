@@ -11,7 +11,7 @@ use Throwable;
 
 class WhatsappIntegracaoController extends Controller
 {
-    public function  validarWebhook(Request $request){
+    public function  enviarMensagem(Request $request){
         try{
 
             // Log::debug($request);
