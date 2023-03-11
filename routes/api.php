@@ -94,6 +94,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::controller(WhatsappIntegracaoController::class)->prefix('whatsapp')->group(function () {
     // Route::post('/enviar-mensagem', 'enviarMensagem');
     Route::post('/enviar-mensagem', 'enviarMensagem');
+    Route::get('/enviar-mensagem', 'validarWebhook');
 });
 
 Route::post('/login', [LoginController::class, 'login']);

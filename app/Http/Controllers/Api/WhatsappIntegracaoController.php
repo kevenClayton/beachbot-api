@@ -13,11 +13,11 @@ class WhatsappIntegracaoController extends Controller
 {
     public function  enviarMensagem(Request $request){
         try{
-            Log::info('Webhook whatsap, requisição: '.$request);
+            Log::info('Webhook whatsap, requisição: '.$request->query('body'));
             // return $request->query('hub_challenge');
 
-            // $whatsappServico = new WhatsappServico;
-            // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
+            $whatsappServico = new WhatsappServico;
+            $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
             return 'teste';
 
 
@@ -30,22 +30,16 @@ class WhatsappIntegracaoController extends Controller
         }
     }
 
-    // public function  enviarMensagem(Request $request){ //validarWebhook
-    //     try{
-    //         Log::info('Webhook whatsap, requisição: '.$request);
-    //         return $request->query('hub_challenge');
-
-    //         // $whatsappServico = new WhatsappServico;
-    //         // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
-
-
-
-    //     }catch(Throwable $e){
-    //         Log::debug($e);
-    //         return response()->json([
-    //             'error'=> true,
-    //             'message'=> $e->getMessage(),
-    //         ], 400);
-    //     }
-    // }
+    public function  validarWebhook(Request $request){ //validarWebhook
+        try{
+            Log::info('Webhook whatsap, requisição: '.$request);
+            return $request->query('hub_challenge');
+        }catch(Throwable $e){
+            Log::debug($e);
+            return response()->json([
+                'error'=> true,
+                'message'=> $e->getMessage(),
+            ], 400);
+        }
+    }
 }
