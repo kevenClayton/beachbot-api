@@ -17,7 +17,7 @@ class WhatsappIntegracaoController extends Controller
             // return $request->query('hub_challenge');
 
             $dadosWhatsapp =   $request->input();
-            $dadosWhatsapp['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'];
+            $dadosWhatsapp['entry'];
             Log::info('Mensagem whatsap, requisição: '.$dadosWhatsapp);
 
             $whatsappServico = new WhatsappServico;
