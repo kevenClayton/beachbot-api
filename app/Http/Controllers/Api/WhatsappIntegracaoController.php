@@ -16,7 +16,7 @@ class WhatsappIntegracaoController extends Controller
 
             // Log::debug($request);
 
-            Log::debug($request);
+            Log::debug($request->hub_challenge);
             // return response($request->hub_challenge)->status(200);
 
 
@@ -24,12 +24,10 @@ class WhatsappIntegracaoController extends Controller
             // $retorno = $whatsappServico->enviarMensagem('Teste daqui', '5531992544367');
 
 
-            return response()->json([
-                'hub_challenge'=> $request->hub_challenge,
-                // 'retornoWhatsapp' =>$retorno
-            ],200);
+            return response()->json($request->hub_challenge,200);
 
         }catch(Throwable $e){
+            Log::debug($e);
             return response()->json([
                 'error'=> true,
                 'message'=> $e->getMessage(),
