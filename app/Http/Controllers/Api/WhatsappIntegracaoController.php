@@ -14,8 +14,22 @@ class WhatsappIntegracaoController extends Controller
     public function  enviarMensagem(Request $request){
         try{
             Log::info('Webhook whatsap, requisição: '.$request);
-            $json = json_decode($request,true);
-            Log::info('Webhook whatsap, requisição JSON: '. $json['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']);
+
+            $value = $request->input('entry.0.changes.0.value');
+
+            if (isset($value['messages'])) {
+                $messages = $value['messages'];
+                $id = $messages[0]['id'];
+                $destination = $messages[0]['from'];
+                $message = $messages[0]['text']['body'] ?? null;
+                $location = $messages[0]['location'] ?? null;
+                $interactive = $messages[0]['interactive'] ?? null;
+
+                // faz o que desejar com as variáveis acima
+            }
+
+
+            Log::info('Webhook whatsap, requisição JSON: '. $message);
 
             // return $request->query('hub_challenge');
 
