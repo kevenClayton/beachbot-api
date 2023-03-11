@@ -85,14 +85,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/listar', 'listarCliente');
     });
 
-    Route::controller(WhatsappIntegracaoController::class)->prefix('whatsapp')->group(function () {
-        // Route::post('/enviar-mensagem', 'enviarMensagem');
-        Route::get('/enviar-mensagem', 'enviarMensagem');
-    });
 
 
 
 
+});
+
+Route::controller(WhatsappIntegracaoController::class)->prefix('whatsapp')->group(function () {
+    // Route::post('/enviar-mensagem', 'enviarMensagem');
+    Route::get('/enviar-mensagem', 'enviarMensagem');
 });
 
 Route::post('/login', [LoginController::class, 'login']);
