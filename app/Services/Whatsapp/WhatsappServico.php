@@ -84,10 +84,6 @@ class WhatsappServico extends BaseServico
                     'message_id'=> $wmaid
                 ],
                 'to'=> $EnviarParaNumero,
-                'type'=> 'text',
-                'text'=> [
-                    'body'=> $mensagem
-                ]
             ];
         }else{
             $data = [
