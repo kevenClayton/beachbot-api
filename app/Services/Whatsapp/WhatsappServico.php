@@ -41,20 +41,19 @@ class WhatsappServico extends BaseServico
         if($wmaid != ""){
             $data = [
                 'messaging_product'=> 'whatsapp',
-
                 'to'=> $EnviarParaNumero,
                 'type'=> 'interactive',
                 'interactive'=>[
                     "type" => "button",
                     "header" => array(
                         "type" => "text",
-                        "text" => "Notícias"
+                        "text" => "Bem vindo a Numar, o que deseja ?"
                     ),
                     "body" => array(
-                        "text" => "As notícias são retiradas do site *Kabum Digital*\n\nSelecione uma opção"
+                        "text" => "Por aqui, você pode saber valores, horários de quadras disponíveis e até reservar seu horário"
                     ),
                     "footer" => array(
-                        "text" => "https://kabum.digital/"
+                        "text" => "Selecione uma opção:"
                     ),
                     "action" => array(
                         "buttons" => array(
@@ -62,23 +61,30 @@ class WhatsappServico extends BaseServico
                                 "type" => "reply",
                                 "reply" => array(
                                     "id" => "news.mostread",
-                                    "title" => "Mais lidas"
+                                    "title" => "Agendar horário"
                                 )
                             ),
                             array(
                                 "type" => "reply",
                                 "reply" => array(
                                     "id" => "news.random",
-                                    "title" => "Aleatórias"
+                                    "title" => "Informações de valores"
                                 )
                             ),
                             array(
                                 "type" => "reply",
                                 "reply" => array(
                                     "id" => "news.latest",
-                                    "title" => "Última notícia"
+                                    "title" => "Informações de aulas"
                                 )
-                            )
+                            ),
+                            array(
+                                "type" => "reply",
+                                "reply" => array(
+                                    "id" => "news.latest",
+                                    "title" => "Valor aluguel de quadra"
+                                )
+                            ),
                         )
                     )
                 ],
