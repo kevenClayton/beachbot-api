@@ -41,7 +41,9 @@ class WhatsappServico extends BaseServico
         if($wmaid != ""){
             $data = [
                 'messaging_product'=> 'whatsapp',
-                'recipient_type'=> 'individual',
+
+                'to'=> $EnviarParaNumero,
+                'type'=> 'interactive',
                 'interactive'=>[
                     "type" => "button",
                     "header" => array(
@@ -83,7 +85,7 @@ class WhatsappServico extends BaseServico
                 'context'=> [
                     'message_id'=> $wmaid
                 ],
-                'to'=> $EnviarParaNumero,
+
             ];
         }else{
             $data = [
