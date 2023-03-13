@@ -29,13 +29,12 @@ class WhatsappIntegracaoController extends Controller
             }
 
             $whatsappServico = new WhatsappServico;
-            $retorno = $whatsappServico->enviarMensagem($mensagem, $destino, $id);
+            $retorno = $whatsappServico->enviarMensagemInterativa($mensagem, $destino, $id);
+            // $retorno = $whatsappServico->enviarMensagem($mensagem, $destino, $id);
 
             Log::debug($retorno);
 
             return 'teste';
-
-
 
         }catch(Throwable $e){
             Log::debug($e);
