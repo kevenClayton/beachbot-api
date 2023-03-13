@@ -78,13 +78,6 @@ class WhatsappServico extends BaseServico
                                     "title" => "Informações de aulas"
                                 )
                             ),
-                            array(
-                                "type" => "reply",
-                                "reply" => array(
-                                    "id" => "news.latest",
-                                    "title" => "Valor aluguel de quadra"
-                                )
-                            ),
                         )
                     )
                 ],
