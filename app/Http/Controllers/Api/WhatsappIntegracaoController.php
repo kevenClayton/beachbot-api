@@ -29,6 +29,9 @@ class WhatsappIntegracaoController extends Controller
             }
 
             $whatsappServico = new WhatsappServico;
+            // if($id == ""){
+            //     $retorno = $whatsappServico->enviarMensagem('Olá, bem vindo a Numar', $destino, $id);
+            // }
             $retorno = $whatsappServico->enviarMensagemInterativa($mensagem, $destino, $id);
             // $retorno = $whatsappServico->enviarMensagem($mensagem, $destino, $id);
 

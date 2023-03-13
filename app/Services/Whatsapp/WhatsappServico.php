@@ -68,7 +68,7 @@ class WhatsappServico extends BaseServico
                                 "type" => "reply",
                                 "reply" => array(
                                     "id" => "news.random",
-                                    "title" => "Informações de valores"
+                                    "title" => "Info. de valores"
                                 )
                             ),
                             array(
